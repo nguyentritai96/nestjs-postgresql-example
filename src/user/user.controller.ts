@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards, Request } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards, Request, ParseArrayPipe} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UpdateResult } from 'typeorm';
 import { CreateUserDto } from './dto/user.create-dto';
@@ -12,7 +12,11 @@ export class UserController {
     constructor (private readonly userService: UserService){}
     
     @Post('/list')
-    createManyUser (@Body() userList: CreateUserDto[]): Promise<void> {
+    createManyUser (@Body(new ParseArrayPipe({ 
+        items: CreateUserDto,
+        whitelist: true, 
+        forbidNonWhitelisted: true 
+    })) userList: CreateUserDto[]): Promise<void> {
         return this.userService.createManyUser(userList);
     }
 

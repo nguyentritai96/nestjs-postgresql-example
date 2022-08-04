@@ -42,7 +42,13 @@ export class UserService {
         await queryRunner.startTransaction();
         try {
             for (const user of users) {
-                await queryRunner.manager.save(user);
+                const { email, password, name, age, country, city, street, zipCode } = user;
+                const hashPassword: string = await this.authService.hashPassword(password);
+                const saveAddress: AddressEntity = await this.addressRepository.save({ country, city, street, zipCode });
+            
+                const userEntity = new UserEntity();
+                Object.assign(userEntity, { email, name, age, password: hashPassword, address: saveAddress });
+                await queryRunner.manager.save(userEntity);
             }
             await queryRunner.commitTransaction();
         } catch (err) {

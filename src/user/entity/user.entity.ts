@@ -5,7 +5,7 @@ import { AddressEntity } from './address.entity';
 @Entity({ name: 'user' })
 export class UserEntity {
   	@PrimaryGeneratedColumn()
-  id: number;
+  	id: number;
 
   	@Column()
 	name: string;
