@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
-import { PostModule } from './post/post.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
+import { PostModule } from './post/post.module';
 
 @Module({
     imports: [
@@ -14,11 +15,11 @@ import { join } from 'path';
         }),
         TypeOrmModule.forRoot({
             type: 'postgres',
-            host: process.env.DATABASE_HOST,
-            port: 5432,
-            username: process.env.DATABASE_USERNAME,
-            password: process.env.DATABASE_PASSWORD,
-            database: process.env.DATABASE_NAME,
+            host: process.env.DB_HOST,
+            port: parseInt(process.env.DB_PORT),
+            username: process.env.DB_USERNAME,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_DATABASE,
             autoLoadEntities: true,
             synchronize: true,
             entities: ['dist/**/*.entity{.ts,.js}'],
@@ -27,8 +28,8 @@ import { join } from 'path';
             rootPath: join(__dirname, '..', 'uploads'),
             serveRoot: '/static'
         }),
-        UserModule,
         AuthModule,
+        UserModule,
         PostModule,
     ],
 })

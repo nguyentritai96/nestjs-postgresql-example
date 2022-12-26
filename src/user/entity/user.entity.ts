@@ -1,8 +1,9 @@
-import { PostEntity } from 'src/post/entity/post.entity';
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, OneToMany, JoinColumn, OneToOne } from 'typeorm';
+
+import { PostEntity } from 'src/post/entity/post.entity';
 import { AddressEntity } from './address.entity';
 
-@Entity({ name: 'user' })
+@Entity({ name: 'user_korean' })
 export class UserEntity {
   	@PrimaryGeneratedColumn()
   	id: number;
