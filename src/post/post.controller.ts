@@ -17,11 +17,11 @@ export class PostController {
         storage: diskStorage({
             destination: './uploads/postImages',
             filename: (req, file, cb) => {
-                const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
-                cb(null, `${randomName}${extname(file.originalname)}`);
+            const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
+            cb(null, `${randomName}${extname(file.originalname)}`);
             }
-        })
-    }))
+            })
+        }))
     createPost (@Request() req, @Body() post: CreatePostDto, @UploadedFile() file: Express.Multer.File): Promise<PostEntity> {
         return this.postService.createPost(req.user, post, file);
     }

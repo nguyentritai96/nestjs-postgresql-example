@@ -14,7 +14,7 @@ export class PostService {
 
     // POST -> 게시물 생성하기
     async createPost (user: UserEntity, post: CreatePostDto, file: Express.Multer.File): Promise<PostEntity> {
-        return await this.postRepository.save({...post, imgUrl: `/static/postImages/${file.filename}`, user});
+        return await this.postRepository.save({...post, imgUrl: `/static/postImages/${file?.filename}`, user});
     }
 
     // GET -> 모든 게시물 조회하기
